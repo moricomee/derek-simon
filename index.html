@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Derek Simon — Storyteller & Editor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #0d0d0d;
+    --mid: #6b6b6b;
+    --light: #b8b8b8;
+    --rule: #e0e0e0;
+    --white: #ffffff;
+    --accent: #c8a96e;
+    --col-left: 320px;
+    --gap: 80px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--white);
+    color: var(--black);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    font-size: 13px;
+    line-height: 1.8;
+    letter-spacing: 0.02em;
+    min-height: 100vh;
+  }
+
+  /* ── Layout shell ── */
+  .page {
+    display: grid;
+    grid-template-columns: var(--col-left) 1fr;
+    min-height: 100vh;
+  }
+
+  /* ── LEFT COLUMN ── */
+  .left {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    border-right: 1px solid var(--rule);
+    padding: 60px 40px 40px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .agency-logo {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--mid);
+    line-height: 1.6;
+    margin-bottom: 48px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.1s;
+  }
+
+  .name-block {
+    margin-bottom: 40px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.3s;
+  }
+
+  .name-first {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 52px;
+    font-weight: 300;
+    line-height: 1;
+    letter-spacing: -0.01em;
+    color: var(--black);
+    display: block;
+  }
+
+  .name-last {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 52px;
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: -0.01em;
+    color: var(--black);
+    display: block;
+    margin-bottom: 12px;
+  }
+
+  .title-line {
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent);
+    display: block;
+  }
+
+  .left-nav {
+    margin-bottom: auto;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.5s;
+  }
+
+  .left-nav a {
+    display: block;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--light);
+    text-decoration: none;
+    padding: 10px 0;
+    border-top: 1px solid var(--rule);
+    transition: color 0.2s;
+  }
+
+  .left-nav a:last-child { border-bottom: 1px solid var(--rule); }
+  .left-nav a:hover { color: var(--black); }
+  .left-nav a.active { color: var(--black); }
+
+  .left-footer {
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.7s;
+  }
+
+  .avid-tag {
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--light);
+    line-height: 2;
+  }
+
+  .contact-link {
+    display: inline-block;
+    margin-top: 16px;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--black);
+    text-decoration: none;
+    border-bottom: 1px solid var(--accent);
+    padding-bottom: 2px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  .contact-link:hover { color: var(--accent); }
+
+  /* ── RIGHT COLUMN ── */
+  .right {
+    padding: 60px var(--gap) 100px calc(var(--gap) - 10px);
+    max-width: 860px;
+  }
+
+  /* ── Hero narrative section ── */
+  .section {
+    margin-bottom: 72px;
+    opacity: 0;
+    animation: fadeUp 0.9s ease forwards;
+  }
+
+  .section:nth-child(1) { animation-delay: 0.4s; }
+  .section:nth-child(2) { animation-delay: 0.55s; }
+  .section:nth-child(3) { animation-delay: 0.7s; }
+  .section:nth-child(4) { animation-delay: 0.85s; }
+
+  .section-label {
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--rule);
+  }
+
+  .section-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 36px;
+    font-weight: 300;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    color: var(--black);
+    margin-bottom: 24px;
+  }
+
+  .section-body {
+    color: var(--mid);
+    font-size: 13px;
+    line-height: 1.9;
+    font-weight: 300;
+    max-width: 620px;
+  }
+
+  .section-body p + p { margin-top: 16px; }
+
+  /* ── Credits divider ── */
+  .credits-divider {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 56px;
+    padding-top: 24px;
+    border-top: 1px solid var(--rule);
+    opacity: 0;
+    animation: fadeUp 0.9s ease forwards 1s;
+  }
+
+  .credits-divider-text {
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--black);
+    white-space: nowrap;
+  }
+
+  .credits-divider-line {
+    flex: 1;
+    height: 1px;
+    background: var(--rule);
+  }
+
+  /* ── Credit entries ── */
+  .credit-list { display: flex; flex-direction: column; }
+
+  .credit {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 24px;
+    padding: 22px 0;
+    border-bottom: 1px solid var(--rule);
+    opacity: 0;
+    animation: fadeUp 0.6s ease forwards;
+  }
+
+  .credit:first-child { border-top: 1px solid var(--rule); }
+
+  .credit-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    color: var(--black);
+    line-height: 1.3;
+    margin-bottom: 4px;
+  }
+
+  .credit-meta {
+    font-size: 11px;
+    font-weight: 400;
+    color: var(--mid);
+    margin-bottom: 4px;
+    letter-spacing: 0.05em;
+  }
+
+  .credit-role {
+    font-size: 11px;
+    color: var(--light);
+    font-style: italic;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px;
+  }
+
+  .credit-network {
+    text-align: right;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    white-space: nowrap;
+    padding-top: 4px;
+  }
+
+  .credit-ep {
+    font-size: 10px;
+    color: var(--light);
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    margin-top: 2px;
+    text-align: right;
+    white-space: nowrap;
+    max-width: 180px;
+  }
+
+  /* ── Animations ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── Scroll-reveal for credits ── */
+  .credit.revealed { opacity: 1; }
+
+  /* ── Responsive ── */
+  @media (max-width: 900px) {
+    :root { --col-left: 260px; --gap: 48px; }
+    .name-first, .name-last { font-size: 40px; }
+  }
+
+  @media (max-width: 700px) {
+    .page { grid-template-columns: 1fr; }
+    .left { position: relative; height: auto; border-right: none; border-bottom: 1px solid var(--rule); }
+    .right { padding: 40px 24px 80px; }
+    .credit { grid-template-columns: 1fr; }
+    .credit-network, .credit-ep { text-align: left; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- LEFT COLUMN -->
+  <aside class="left">
+    <div class="agency-logo">
+      The<br>Independent<br>Post Co.
+    </div>
+
+    <div class="name-block">
+      <span class="name-first">Derek</span>
+      <span class="name-last">Simon</span>
+      <span class="title-line">Storyteller &amp; Editor</span>
+    </div>
+
+    <nav class="left-nav">
+      <a href="#broadcast" class="active">Broadcast</a>
+      <a href="#corporate">Corporate</a>
+      <a href="#news">News</a>
+      <a href="#credits">Credits</a>
+    </nav>
+
+    <div class="left-footer">
+      <div class="avid-tag">Avid Certified<br>25+ Years Experience<br>London&nbsp;· International</div>
+      <a href="mailto:anthony@indepost.co.uk" class="contact-link">Get in touch</a>
+    </div>
+  </aside>
+
+  <!-- RIGHT COLUMN -->
+  <main class="right">
+
+    <!-- BROADCAST -->
+    <div class="section" id="broadcast">
+      <div class="section-label">Broadcast</div>
+      <h2 class="section-heading">Reality, Documentary &amp; Entertainment</h2>
+      <div class="section-body">
+        <p>Harnessing over 25 years experience across high-end reality, documentary, and entertainment, I specialise in crafting emotionally resonant narratives from complex, high-volume material.</p>
+        <p>My portfolio spans major networks including ITV, BBC, Channel 4, RTÉ and Netflix, where I have served as a senior Editor for flagship series such as <em>I'm A Celebrity… Get Me Out Of Here!</em>, <em>Love Island</em>, and <em>RuPaul's Drag Race UK</em>. Whether architecting the narrative arc of a feature-length historical documentary or managing the fast-paced demands of primetime reality entertainment, I bring a rigorous editorial discipline to every frame.</p>
+      </div>
+    </div>
+
+    <!-- CORPORATE -->
+    <div class="section" id="corporate">
+      <div class="section-label">Corporate</div>
+      <h2 class="section-heading">Evidence-Based Visual Storytelling</h2>
+      <div class="section-body">
+        <p>I translate complex global mechanisms and technical data into compelling, human-focused stories that resonate in the corporate boardroom. My approach focuses on evidence-based storytelling, helping organisations such as Google and Microsoft demonstrate credible impact to executive stakeholders.</p>
+        <p>I bridge the gap between technical advocacy and persuasive visual communication, and am adept at managing multilingual content to ensure authentic representation across global territories.</p>
+      </div>
+    </div>
+
+    <!-- NEWS -->
+    <div class="section" id="news">
+      <div class="section-label">News</div>
+      <h2 class="section-heading">High-Integrity Reporting</h2>
+      <div class="section-body">
+        <p>A veteran of high-pressure newsrooms, I provide the boardroom standard of professional finish required for fast-turnaround, high-integrity reporting. My work for Channel 4 News and RTÉ involves distilling raw, challenging reality into punchy, impactful reports.</p>
+        <p>This background in current affairs has honed my ability to identify the strongest narrative thread within complex material — ensuring every story is equally engaging and educational for a mainstream audience.</p>
+      </div>
+    </div>
+
+    <!-- CREDITS DIVIDER -->
+    <div class="credits-divider" id="credits">
+      <span class="credits-divider-text">Selected Credits</span>
+      <div class="credits-divider-line"></div>
+    </div>
+
+    <!-- CREDIT LIST -->
+    <div class="credit-list" id="credit-list">
+    </div>
+
+  </main>
+</div>
+
+<script>
+const credits = [
+  { title: "Love Island USA: The Games Series 2", meta: "60' · Reality Entertainment Series", network: "ITV / Peacock", role: "Avid Offline — Story Editor", ep: "EPs: Claudine Parrish, Mike Spencer & Tom Gould" },
+  { title: "Pride of Britain 2023 & 2025", meta: "2 × 120' · Awards Ceremony", network: "ITV / ITV1", role: "Avid Offline — VT Inserts & Main Show Stitch", ep: "EPs: Mark Scantlebury & Simone Haywood" },
+  { title: "Dress The Nation Series 2", meta: "1 × 60' · Factual Entertainment", network: "South Shore / ITV1", role: "Avid Offline", ep: "EP: Ben Peart" },
+  { title: "The Hunt", meta: "1 × 60' · Reality Entertainment", network: "CPL / Channel 4", role: "Avid Offline — Additional Editing", ep: "EP: Murray Boland" },
+  { title: "Celebrity Sabotage", meta: "1 × 60' · Entertainment", network: "ITV / ITV1", role: "Avid Offline", ep: "EP: Richard Cowles" },
+  { title: "Love Triangle Series 2", meta: "1 × 60' · Reality Entertainment", network: "Workerbee / E4", role: "Avid Offline", ep: "EP: John Cahn" },
+  { title: "Silence Is Golden", meta: "1 × 60' · Comedy Entertainment", network: "Yes Yes Media / Dave", role: "Avid Offline", ep: "SP: Tim Dean" },
+  { title: "Celebrity Bear Hunt", meta: "1 × 60' · Reality Entertainment", network: "Workerbee / Netflix", role: "Avid Offline", ep: "EPs: Ben Mitchell, Olly Nash, Saul Fearnley & Charlie Bennett" },
+  { title: "For The Love Of Dogs", meta: "30' · Factual Entertainment Series", network: "Multistory / ITV1", role: "Avid Offline", ep: "Director: Pete Deagle" },
+  { title: "I'm A Celebrity… Get Me Out Of Here! Series 17–19 & 23", meta: "60' · Reality Entertainment Series", network: "ITV / ITV1", role: "Avid Offline", ep: "EPs: Richard Cowles, Rebecca Walker & Chris Brogden" },
+  { title: "In For A Penny Series 6", meta: "60' · Game Show Series", network: "ITV / ITV1", role: "Avid Offline", ep: "EP: Ben Aston" },
+  { title: "Love Island: The Reunion 2023", meta: "1 × 90' · Reality Entertainment", network: "ITV / ITV1", role: "Avid Offline", ep: "EP: Justin Saculles" },
+  { title: "Love Island: Aftersun 2023", meta: "60' · Reality Entertainment Series", network: "ITV / ITV1", role: "Avid Offline", ep: "SD: Ben Hardy · EP: Justin Saculles" },
+  { title: "Hot Yachts", meta: "1 × 60' · Reality Entertainment", network: "Curve Media / Paramount+", role: "Avid Offline", ep: "EP: Paul Yuan" },
+  { title: "Rise & Fall", meta: "1 × 60' · Reality Entertainment", network: "Studio Lambert / Channel 4", role: "Avid Offline", ep: "EP: Martin Oxley" },
+  { title: "I'm A Celebrity… All-Stars", meta: "60' · Reality Entertainment Series", network: "ITV1 / ITV2", role: "Avid Offline", ep: "EPs: Richard Cowles, Rebecca Walker & Chris Brogden" },
+  { title: "I Kissed A Boy", meta: "1 × 60' · Reality Entertainment", network: "Two Four / BBC Three", role: "Avid Offline", ep: "EPs: Louise Hutchinson, David Brindley & Dan Gray" },
+  { title: "Celebrity Save Our Sperm", meta: "1 × 60' · Factual Entertainment", network: "Crackit / Channel 4", role: "Avid Offline", ep: "EP: Elaine Hackett" },
+  { title: "Married At First Sight Series 7", meta: "1 × 60' · Reality Entertainment", network: "CPL / E4", role: "Avid Offline", ep: "SEP: Erin Doyle · SE: Rachel Viner" },
+  { title: "Apocalypse Wow Series 1 & 2", meta: "60' · Game Show Series", network: "Tuesdays Child / ITV2", role: "Avid Offline", ep: "SP: Ben Wilson · EP: Steph Harris" },
+  { title: "Hungry For It", meta: "1 × 60' · Cookery Entertainment", network: "BBC / BBC Three", role: "Avid Offline", ep: "SP: Tim Hancock" },
+  { title: "Walk The Line", meta: "6 × 60' · Reality Entertainment", network: "ITV / ITV1", role: "Avid Offline — Pre-titles", ep: "EP: Lee McNicholas" },
+  { title: "Language Of Love", meta: "1 × 60' · Reality Entertainment", network: "2LE Media / Channel 4", role: "Avid Offline", ep: "EP: Thom Thostrup" },
+  { title: "The Circle USA Series 2–5 / The Circle UK", meta: "60' · Factual Entertainment Series", network: "Studio Lambert / Netflix / Channel 4", role: "Avid Offline", ep: "EPs: Tim Harcourt, Daisy Lilly, Toni Ireland & Martin Oxley" },
+  { title: "Geordie Shore Series 22", meta: "1 × 60' · Reality Entertainment", network: "Lime Pictures / MTV UK", role: "Avid Offline", ep: "EP: Manus Wynne" },
+  { title: "Catfish UK", meta: "1 × 60' · Reality Entertainment", network: "Viacom / MTV UK", role: "Avid Offline", ep: "EP: Kate Amarnani" },
+  { title: "Little Mix: The Search", meta: "60' · Reality Entertainment Series", network: "Modest TV / BBC One", role: "Avid Offline", ep: "SP: Amy Boyle · EP: Andrea Hamilton" },
+  { title: "The Only Way Is Essex", meta: "60' · Reality Entertainment Series", network: "Lime Pictures / ITVBe", role: "Avid Offline — Story Editor", ep: "" },
+  { title: "Celebs Go Dating", meta: "60' · Reality Entertainment Series", network: "Lime Pictures / E4", role: "Avid Offline — Story Editor", ep: "EP: Gareth Walker" },
+  { title: "RuPaul's Drag Race UK", meta: "60' · Reality Entertainment Series", network: "WOW / BBC Three", role: "Avid Offline", ep: "EPs: RuPaul Charles, Fenton Bailey, Randy Barbato & Tom Campbell" },
+  { title: "Love Island", meta: "60' · Reality Entertainment Series", network: "ITV / ITV2", role: "Avid Offline — Story Editor", ep: "SP: Sarah Fay" },
+  { title: "Love Island Australia", meta: "60' · Reality Entertainment Series", network: "9Go / 9Now / ITVBe", role: "Avid Offline", ep: "EPs: Alex Mavroidakis, Majella Wiemers & Jaala Webster" },
+  { title: "Don't Rock The Boat", meta: "1 × 60' · Factual Entertainment", network: "South Shore / ITV1", role: "Avid Offline", ep: "SP: Lyndon Tovey" },
+  { title: "Secret Crush", meta: "60' · Reality Entertainment Series", network: "Naked Television / ITV2", role: "Avid Offline — Story Cutting", ep: "EP: Tom O'Brien" },
+  { title: "Game Of Talents", meta: "1 × 60' · Game Show", network: "Fremantle / ITV1", role: "Avid Offline — Additional Editing", ep: "EP: Ashley Whitehouse" },
+  { title: "Dancing On Ice Series 10", meta: "VT Inserts · Reality Entertainment", network: "ITV / ITV1", role: "Avid Offline", ep: "EP: Clodagh O'Donaghue" },
+  { title: "The Voice Kids Series 1 & 2", meta: "60' · Reality Entertainment Series", network: "ITV / ITV1", role: "Avid Offline", ep: "EP: Dave Wiseman · SP: Olli Head" },
+  { title: "I'm A Celebrity… Series 17–19 & 23", meta: "60' · Reality Entertainment Series", network: "ITV / ITV1", role: "Avid Offline", ep: "EPs: Richard Cowles, Rebecca Walker & Chris Brogden" },
+  { title: "X Factor Series 11–15", meta: "60' · Reality Entertainment Series", network: "Talkback Thames / ITV1", role: "Avid Offline — incl. live finals & room auditions", ep: "EP: Richard Holloway" },
+  { title: "Big Brother Series 15", meta: "60' · Reality Entertainment Series", network: "Endemol / Channel 4", role: "Avid Offline", ep: "EP: Denis O'Connor" },
+  { title: "The Voice UK Series 4", meta: "60' · Reality Entertainment Series", network: "Wall To Wall / BBC One", role: "Avid Offline", ep: "SE: Clodagh O'Donaghue · SP: Ed Booth" },
+  { title: "Don't Tell The Bride Series 2 & 3", meta: "6 × 60' · Reality Entertainment", network: "Coco TV / RTE 2", role: "Avid Offline", ep: "EP: Linda Cullen" },
+  { title: "ITV Daytime", meta: "Various · Daytime & Current Affairs", network: "ITV / ITV1", role: "Avid Offline — Craft Editor", ep: "" },
+  { title: "ICA Bootcamp Series 1–3", meta: "3 × 60' · Reality Entertainment", network: "Independent Pictures / RTE 2", role: "Avid Offline", ep: "Producer: Sarah Barrow" },
+];
+
+function buildCredits() {
+  const list = document.getElementById('credit-list');
+  credits.forEach((c, i) => {
+    const delay = Math.min(i * 40, 800);
+    const div = document.createElement('div');
+    div.className = 'credit';
+    div.style.animationDelay = `${delay}ms`;
+    div.innerHTML = `
+      <div>
+        <div class="credit-title">${c.title}</div>
+        <div class="credit-meta">${c.meta}</div>
+        <div class="credit-role">${c.role}</div>
+      </div>
+      <div>
+        <div class="credit-network">${c.network}</div>
+        ${c.ep ? `<div class="credit-ep">${c.ep}</div>` : ''}
+      </div>
+    `;
+    list.appendChild(div);
+  });
+
+  // Intersection Observer for scroll-reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.style.opacity = 1; observer.unobserve(e.target); }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.credit').forEach(el => observer.observe(el));
+}
+
+// Nav active state on scroll
+function initNav() {
+  const sections = ['broadcast', 'corporate', 'news', 'credits'];
+  const links = document.querySelectorAll('.left-nav a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(id => {
+      const el = document.getElementById(id);
+      if (el && window.scrollY >= el.offsetTop - 120) current = id;
+    });
+    links.forEach(a => {
+      a.classList.toggle('active', a.getAttribute('href') === `#${current}`);
+    });
+  });
+}
+
+buildCredits();
+initNav();
+</script>
+</body>
+</html>
